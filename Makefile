@@ -13,6 +13,7 @@ CC = cc
 DEPS = Makefile includes/nkg.h
 
 
+
 # Flags and Libs Depend on the OS
 
 ifeq ($(UNAME_S),Linux)
@@ -38,14 +39,14 @@ OBJS = $(SRCS:.c=.o)
 # Rules
 
 %.o : %.c $(DEPS)
-	$(CC) $(MLX_C_FLAGS) $(CFLAGS) -c $< -o $@
+	$(CC) -I includes $(MLX_C_FLAGS) $(CFLAGS) -c $< -o $@
 
 # targets
 
 all: $(NAME)
 
 $(NAME) : $(OBJS)
-	$(CC) $(MLX_C_FLAGS) $(CFLAGS) -o $@ $^ $(MLX_L_FLAGS)
+	$(CC) -I includes $(MLX_C_FLAGS) $(CFLAGS) -o $@ $^ $(MLX_L_FLAGS)
 
 clean:
 	rm -f $(OBJS)

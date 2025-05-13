@@ -1,12 +1,23 @@
 #ifndef NKG_H
 # define NKG_H
 
+// DEFINING DEFAULT SIZES FOR VERTICAL AND HORIZONTAL BOARD
+
+# define V_SIZE 3
+# define H_SIZE 5
+# define CELL_LENGHT 40
+
+# define WIDTH 1200
+# define HEIGHT 1000
+
 // INCLUDES
 
 #include "mlx.h"
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
+#include <unistd.h>
 
 // STRUCTS
 
@@ -36,5 +47,23 @@ typedef	struct s_cell
 	bool	visited;
 }	t_cell;
 
+typedef struct s_board {
+	int 	v_size;
+	int		h_size;
+	t_cell	***cells;
+}	t_board;
+
+
+// UTILS
+void		*safe_malloc(size_t size);
+void		exit_error(char *str);
+
+// INITS
+t_board		*init_board(int ac, char **av);
+t_screen	*init_screen();
+
+// DRAWING 
+void	draw_board(t_board *board, t_screen *screen);
+void	my_pixel_put(int i, int j, t_image *img, int color);
 
 #endif
