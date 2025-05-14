@@ -8,5 +8,6 @@ int main(int argc, char **av)
 	board = init_board(argc,av);
 	screen = init_screen();
 	draw_board(board,screen);
+	solution(board,screen);
 	mlx_loop(screen->connection);	
 }

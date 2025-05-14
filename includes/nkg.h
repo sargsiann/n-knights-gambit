@@ -48,11 +48,13 @@ typedef struct s_board {
 	bool	**cells;
 }	t_board;
 
-typedef struct s_path {
-	int *path;
-	int	size;
-}	t_path;
 
+// FOR PATHDRAWING
+typedef struct s_cell {
+	int		x;
+	int		y;
+	struct	s_cell *next;
+}	t_cell;
 
 // UTILS
 void		*safe_malloc(size_t size);
@@ -65,5 +67,10 @@ t_screen	*init_screen();
 // DRAWING 
 void	draw_board(t_board *board, t_screen *screen);
 void	my_pixel_put(int i, int j, t_image *img, int color);
+
+
+// SOLUTION
+
+void	solution(t_board *board, t_screen *screen);
 
 #endif
