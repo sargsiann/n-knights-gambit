@@ -39,7 +39,7 @@ void	fill_cell(int i, int j, t_image *img)
 
 void	draw_board(t_board *board, t_screen *screen) 
 {
-	t_cell ***cells = board->cells;
+	bool **cells = board->cells;
 
 	for (int i = 0; i < board->v_size; i++) {
 		for (int j = 0; j < board->h_size; j++) {

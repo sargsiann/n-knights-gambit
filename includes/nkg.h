@@ -36,22 +36,22 @@ typedef	struct s_screen {
 }	t_screen;
 
 typedef struct s_knight {
-	int v_pos;
-	int	h_pos;
+	int 			v_pos;
+	int				h_pos;
+	struct s_knight *next;
 }	t_knight;
 
-typedef	struct s_cell
-{
-	int		v_pos;
-	int		h_pos;
-	bool	visited;
-}	t_cell;
 
 typedef struct s_board {
 	int 	v_size;
 	int		h_size;
-	t_cell	***cells;
+	bool	**cells;
 }	t_board;
+
+typedef struct s_path {
+	int *path;
+	int	size;
+}	t_path;
 
 
 // UTILS
