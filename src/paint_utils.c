@@ -47,8 +47,52 @@ void	draw_board(t_board *board, t_screen *screen)
 		}
 	}
 	mlx_put_image_to_window(screen->connection,screen->window,screen->image_s->img,0,0);
+	sleep(1);
 }
 
-void	draw_line_dda() {
-		
+void	draw_path(t_cell *path,t_screen *s) 
+{
+	int s_x = (path->x) * CELL_LENGHT + WIDTH/2  + CELL_LENGHT/2 - 200;
+	int s_y = (path->y) * CELL_LENGHT + HEIGHT/2 + CELL_LENGHT/2 - 200;
+
+	int e_x,e_y;
+
+	path = path->next;
+	while (path)
+	{
+		e_x = (path->x) * CELL_LENGHT + WIDTH/2  + CELL_LENGHT/2 - 200;
+		e_y = (path->y) * CELL_LENGHT + HEIGHT/2 + CELL_LENGHT/2 - 200;
+		draw_line_dda(s_x,s_y,e_x,e_y,s->image_s);
+		mlx_put_image_to_window(s->connection,s->window,s->image_s->img,0,0);
+		usleep(1 * 80000);
+		path = path->next;
+		s_x = e_x;
+		s_y = e_y;
+	}
+}
+
+void	draw_line_dda(float s_x, float s_y, float e_x, float e_y, t_image *image) 
+{
+	// Getting absolute distance between endpoints 
+	float dx = abs(e_x - s_x);
+	float dy = abs(e_y - s_y);
+
+	// Defining maximum steps 
+	float steps = dx > dy ? dx : dy;
+
+	// Getting steps for x and y
+	float step_x = (e_x - s_x) / steps;
+	float step_y = (e_y - s_y) / steps;
+
+	// The drawing
+	while (steps > 0)
+	{
+		my_pixel_put(s_y,s_x,image,0xff0000);
+		my_pixel_put(s_y,s_x - 1,image,0xff0000);
+		my_pixel_put(s_y,s_x + 1,image,0xff0000);
+		s_x += step_x;
+		s_y += step_y;
+		steps--;
+	}
+	printf("\n");
 }

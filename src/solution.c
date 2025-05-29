@@ -102,7 +102,6 @@ t_cell *solve_for_one(t_board *board, int moves[8][3], int v_pos, int h_pos, int
 	if (counter == (board->h_size * board->v_size) - 1)
 		return path;
 
-	printf("%d%d\n",v_pos,h_pos);
 	// Getting index each time for backtracking case
 	while (1)
 	{
@@ -110,8 +109,8 @@ t_cell *solve_for_one(t_board *board, int moves[8][3], int v_pos, int h_pos, int
 		int index = optimal_move(v_pos, h_pos, moves, board, checked);
 
 		// If there is no possible moves from that cell (tupik) returning NULL for backtrack for one lvl higher 
-		// It is less possible because we use warnsdorff heruistic for this 
-		// So the algorithm will not last too long in
+		// It is less possible because we use warnsdorff heruistic algorithm for this 
+		// So the algorithm will not last too long even in case of herustic wrongness
 		if (index == -1)
 		{
 			cells[v_pos][h_pos] = false;
@@ -151,8 +150,8 @@ void	solution(t_board *board, t_screen *screen)
 		t_cell *path = solve_for_one(board, moves,0,0,0);
 		
 		// getting path for drawing ...draw_path;
-		
-		
+		draw_path(path,screen);
+
 		return;
 	}
 

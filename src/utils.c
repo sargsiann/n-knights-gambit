@@ -14,3 +14,10 @@ void	exit_error(char *str)
 	fprintf(stderr,"%s",str);
 	exit(1);
 }
+
+void	swap_ints(int *s1, int *s2) 
+{
+	int tmp = *s1;
+	*s1 = *s2;
+	*s2 = s1;
+}

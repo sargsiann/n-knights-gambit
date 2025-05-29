@@ -16,7 +16,6 @@ bool	can_visited_by_one(t_board *b)
 
 void	print_path(t_cell *path) 
 {
-	printf("adhkhdak");
 	while (path)
 	{
 		printf("%d %d \n",path->y,path->x);

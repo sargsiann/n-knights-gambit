@@ -59,6 +59,7 @@ typedef struct s_cell {
 // UTILS
 void		*safe_malloc(size_t size);
 void		exit_error(char *str);
+void		swap_ints(int *s1, int *s2); 
 
 // INITS
 t_board		*init_board(int ac, char **av);
@@ -67,7 +68,8 @@ t_screen	*init_screen();
 // DRAWING 
 void	draw_board(t_board *board, t_screen *screen);
 void	my_pixel_put(int i, int j, t_image *img, int color);
-
+void	draw_line_dda(float s_x, float s_y, float e_x, float e_y, t_image *image);
+void	draw_path(t_cell *path, t_screen *s);
 
 // SOLUTION
 
