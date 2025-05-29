@@ -73,4 +73,9 @@ void	my_pixel_put(int i, int j, t_image *img, int color);
 
 void	solution(t_board *board, t_screen *screen);
 
+// SOL UTILS
+
+bool	can_visited_by_one(t_board *b);
+void	print_path(t_cell *path);
+
 #endif

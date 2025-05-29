@@ -48,3 +48,7 @@ void	draw_board(t_board *board, t_screen *screen)
 	}
 	mlx_put_image_to_window(screen->connection,screen->window,screen->image_s->img,0,0);
 }
+
+void	draw_line_dda() {
+		
+}

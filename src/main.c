@@ -9,5 +9,6 @@ int main(int argc, char **av)
 	screen = init_screen();
 	draw_board(board,screen);
 	solution(board,screen);
+	fflush(stdout);
 	mlx_loop(screen->connection);	
 }
