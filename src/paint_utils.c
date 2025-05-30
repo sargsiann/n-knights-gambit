@@ -94,5 +94,4 @@ void	draw_line_dda(float s_x, float s_y, float e_x, float e_y, t_image *image)
 		s_y += step_y;
 		steps--;
 	}
-	printf("\n");
 }
