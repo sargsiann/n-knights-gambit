@@ -52,6 +52,8 @@ void	draw_board(t_board *board, t_screen *screen)
 
 void	draw_path(t_cell *path,t_screen *s) 
 {
+	if (!path)
+		return ;
 	int s_x = (path->x) * CELL_LENGHT + WIDTH/2  + CELL_LENGHT/2 - 200;
 	int s_y = (path->y) * CELL_LENGHT + HEIGHT/2 + CELL_LENGHT/2 - 200;
 
@@ -85,6 +87,13 @@ void	draw_line_dda(float s_x, float s_y, float e_x, float e_y, t_image *image)
 	float step_y = (e_y - s_y) / steps;
 
 	// The drawing
+	my_pixel_put(s_y,s_x,image,0xff0000);
+	for (int i = 0; i < 7; i++) {
+		my_pixel_put(s_y,s_x + i,image,0xff0000);
+		my_pixel_put(s_y,s_x - i,image,0xff0000);
+		my_pixel_put(s_y + i,s_x,image,0xff0000);
+		my_pixel_put(s_y - i,s_x,image,0xff0000);
+	}
 	while (steps > 0)
 	{
 		my_pixel_put(s_y,s_x,image,0xff0000);

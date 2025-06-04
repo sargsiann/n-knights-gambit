@@ -2,15 +2,6 @@
 
 static int moves[8][3] = {{-1,2,0},{-1,-2,0},{-2,-1,0},{-2,1,0},{1,-2,0},{1,2,0},{2,1,0},{2,-1,0}};
 
-// FUNCTION FOR MOVEING KNIGHT DEPENDS ON WARNSDORF STRATEGY
-
-void	move_knight(t_board *board, t_knight *knight, int move[3]) 
-{
-	knight->h_pos += move[1];
-	knight->v_pos += move[0];
-	board->cells[knight->v_pos][knight->h_pos] = true;
-}
-
 // FINDING FURTHER POSSIBLE MOVES OF POSITION
 short	possible_moves(t_board *board, int h_pos, int v_pos) 
 {
@@ -47,6 +38,7 @@ short	possible_moves(t_board *board, int h_pos, int v_pos)
 	return c;
 }
 
+// Optimal move by Warnsdorfs rule
 int	optimal_move(int v_pos,int h_pos, t_board *board, bool checked[8])
 {
 	int min_index = -1;
@@ -78,7 +70,7 @@ int	optimal_move(int v_pos,int h_pos, t_board *board, bool checked[8])
 }
 
 
-// Solution is for open tour not closed
+// Solution is for open tour 
 t_cell *solve_for_one(t_board *board, int v_pos, int h_pos, int counter, int needed) 
 {
 	// Initing part of path
@@ -96,12 +88,11 @@ t_cell *solve_for_one(t_board *board, int v_pos, int h_pos, int counter, int nee
 	// Matching true for future checking avoiding moveing the visited place
 	cells[v_pos][h_pos] = true;
 
-	++counter;
 	// If we got all fields filled
+	++counter;
 	if (counter == needed)
-	{
 		return path;
-	}
+	
 	// Getting index each time for backtracking case
 	while (1)
 	{
@@ -117,12 +108,13 @@ t_cell *solve_for_one(t_board *board, int v_pos, int h_pos, int counter, int nee
 			free(path);
 			return NULL;
 		}
+
+		checked[index] = 1;
 		
 		// Getting the next positions
 		int n_h = h_pos + moves[index][1];
 		int n_v = v_pos + moves[index][0];
 
-		// Matching that path selected to avoid infinite selecting
 		
 		// Recursive calling
 		path->next = solve_for_one(board,n_v,n_h,counter,needed);
@@ -130,42 +122,32 @@ t_cell *solve_for_one(t_board *board, int v_pos, int h_pos, int counter, int nee
 		if (path->next != NULL)
 			return path;
 	}
-	// If no solution found (speccialy for multiknight case)
-	free(path);
-	return (NULL);
+	// In any case returning path for checking
+	return path;
 }
 
 
-void	solve_for_multiple(t_board *board,t_knight **knights) 
+void	solve_for_multiple(t_board *board, t_screen *s) 
 {	
 	// The dynamic vector of paths of all knights
-	t_cell **paths;
-	int		size;
+	t_cell *path = NULL;
+	int i = 0; // Indicator for knight color
 
-	// Getting our first knight
-	t_knight *tmp = *knights;
 
-	// Initing path for two knights at first
-	paths = safe_malloc(sizeof(t_cell *) * 2);
-	size = 2;
-
-	// While we have knights needed to fill the board 
-	while (tmp)
+	// While our board is not filled
+	while (is_filled(board))
 	{
-		/*The function for adding path of new knight (if needed to paths) and add that knight to knight list;
-			for each knight trying to choose the path that will leave maximal connected for another knight to
-		 reduce the numbers of knights if its not possible to fill the board by itself */
-		
-		paths = choose_optimal_path(paths, size, board, tmp, knights);
-		tmp = tmp->next;
+		//  Getting the most optimal path for each knight depends on availabilty
+		path = choose_optimal_path(board,s);
+
+		// There will be part for horse color
+		// ...
+		draw_path(path,s);
 	}
 }
 
 void	solution(t_board *board, t_screen *screen) 
 {
-	t_knight **head = safe_malloc(sizeof(t_knight *));
-	t_knight *first_knight = safe_malloc(sizeof(t_knight));
-	
 	// ADDING FLAG FOR CHECKED ROUTES NOT TRY IN SITUATION OF BACKTRACK (GOING FROM LESS POSSIBLE TO MOST BY WARNSDORF)
 	// {MOVE_VERTICAL, MOVE_HORIZONTAL, CHECKED THAT_WAY}
 
@@ -175,7 +157,7 @@ void	solution(t_board *board, t_screen *screen)
 	if (can_visited_by_one(board) == true)
 	{
 		// If it is solving
-		t_cell *path = solve_for_one(board,0,0,0,board->h_size * board->v_size - 1);
+		t_cell *path = solve_for_one(board,0,0,0,board->h_size * board->v_size);
 		
 		// getting path for drawing ...draw_path;
 		draw_path(path,screen);
@@ -183,11 +165,6 @@ void	solution(t_board *board, t_screen *screen)
 		return;
 	}
 
-	// Part for multiple knights checking
-	first_knight->h_pos = 0;
-	first_knight->v_pos = 0;
-	first_knight->next = NULL;
-	*head = first_knight;
-
-	solve_for_multiple(board,head);
+	// Part for multiple knights
+	solve_for_multiple(board,screen);
 }

@@ -34,26 +34,3 @@ t_screen *init_screen()
 	
 	return sc;
 }
-
-t_knight *new_knight(int v_pos, int h_pos) {
-	t_knight *k = safe_malloc(sizeof(t_knight));
-	k->h_pos = h_pos;
-	k->v_pos = v_pos;
-	k->next = NULL;
-}
-
-void	push_knight(t_knight **head, t_knight *knight) 
-{
-	if (!(*head)) 
-	{
-		*head = knight;
-		return ;
-	}
-	
-	t_knight *tmp;
-
-	tmp = *head;
-	while (tmp->next)
-		tmp = tmp->next;
-	tmp->next = knight;
-}

@@ -35,13 +35,6 @@ typedef	struct s_screen {
 	t_image *image_s;
 }	t_screen;
 
-typedef struct s_knight {
-	int 			v_pos;
-	int				h_pos;
-	struct s_knight *next;
-}	t_knight;
-
-
 typedef struct s_board {
 	int 	v_size;
 	int		h_size;
@@ -59,7 +52,6 @@ typedef struct s_cell {
 // UTILS
 void		*safe_malloc(size_t size);
 void		exit_error(char *str);
-void		swap_ints(int *s1, int *s2); 
 
 // INITS
 t_board		*init_board(int ac, char **av);
@@ -74,7 +66,7 @@ void	draw_path(t_cell *path, t_screen *s);
 // SOLUTION
 
 void	solution(t_board *board, t_screen *screen);
-t_cell **choose_optimal_path(t_cell **paths,int size, t_board *b,t_knight *current, t_knight **knights);
+t_cell *choose_optimal_path(t_board *b,t_screen *screen);
 t_cell *solve_for_one(t_board *board, int v_pos, int h_pos, int counter, int needed);
 
 // SOL UTILS
