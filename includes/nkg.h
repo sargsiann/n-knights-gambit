@@ -74,4 +74,7 @@ t_cell *solve_for_one(t_board *board, int v_pos, int h_pos, int counter, int nee
 bool	can_visited_by_one(t_board *b);
 void	print_path(t_cell *path);
 
+// For global variable
+extern bool is_filled;
+
 #endif

@@ -1,6 +1,7 @@
 #include "nkg.h"
 
 static int moves[8][3] = {{-1,2,0},{-1,-2,0},{-2,-1,0},{-2,1,0},{1,-2,0},{1,2,0},{2,1,0},{2,-1,0}};
+bool	is_filled = false;
 
 // FINDING FURTHER POSSIBLE MOVES OF POSITION
 short	possible_moves(t_board *board, int h_pos, int v_pos) 
@@ -135,7 +136,7 @@ void	solve_for_multiple(t_board *board, t_screen *s)
 
 
 	// While our board is not filled
-	while (is_filled(board))
+	while (!is_filled)
 	{
 		//  Getting the most optimal path for each knight depends on availabilty
 		path = choose_optimal_path(board,s);
